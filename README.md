@@ -23,7 +23,7 @@ Hệ thống nhận diện và phân loại phế liệu di chuyển trên băng
 
 * **Lý do sử dụng Học sâu (Deep Learning):** Do hình dạng, kích thước, góc nghiêng, nhãn mác của phế liệu rất đa dạng và điều kiện ánh sáng thực tế trên băng chuyền thay đổi liên tục.Các phương pháp xử lý ảnh truyền thống dựa trên ngưỡng màu hoặc đường biên cố định không thể giải quyết triệt để.Mạng CNN có khả năng tự động trích xuất các đặc trưng hình học bất chấp sự dịch chuyển, xoay hoặc thay đổi độ sáng
 * **Yêu cầu hệ thống:**
-  ***Đầu vào (Input):** Ảnh phế liệu từ tập dữ liệu sẵn có, kích thước gốc được chuẩn hóa về 128 \times 128
+  ***Đầu vào (Input):** Ảnh phế liệu từ tập dữ liệu sẵn có, kích thước gốc được chuẩn hóa về 128x128
   * **Đầu ra (Output):** Phân loại chính xác 1 trong 3 nhóm phế liệu (chai nhựa, lon nhôm, thùng giấy coton).
   * **Thời gian xử lý:** \le 0.5 giây/ảnh để đảm bảo kịp tốc độ dịch chuyển của băng chuyền.
 
@@ -32,13 +32,13 @@ Mô hình mạng CNN được xây dựng theo cấu trúc `Sequential` tuần t
 
 | Tầng (Layer) | Loại Layer | Cấu hình / Kích thước đầu ra |
 | :--- | :--- | :--- |
-| **Layer 1** | Conv2D | 32 bộ lọc (filters), kích thước kernel 3 \times 3, hàm kích hoạt `relu`.Nhận Input Shape `(128, 128, 3)` |
-| **Layer 2** | MaxPooling2D | Kích thước pool 2 \times 2, giúp giảm chiều không gian xuống còn `(64, 64, 32)`. |
-| **Layer 3** | Conv2D | 64 bộ lọc, kích thước kernel 3 \times 3, hàm kích hoạt `relu` |
-| **Layer 4** | MaxPooling2D | Kích thước pool 2 \times 2, giảm chiều xuống còn `(30, 30, 64)` |
-| **Layer 5** | Conv2D |128 bộ lọc, kích thước kernel 3 \times 3, hàm kích hoạt `relu`. |
-| **Layer 6** | MaxPooling2D | Kích thước pool 2 \times 2 giảm chiều xuống còn `(14, 14, 128)`. |
-| **Layer 7** | Flatten | Phẳng hóa ma trận đặc trưng thành vector 1 chiều có kích thước $14 \times 14 \times 128 = 25088 phần tử. |
+| **Layer 1** | Conv2D | 32 bộ lọc (filters), kích thước kernel 3x3, hàm kích hoạt `relu`.Nhận Input Shape `(128, 128, 3)` |
+| **Layer 2** | MaxPooling2D | Kích thước pool 2x2, giúp giảm chiều không gian xuống còn `(64, 64, 32)`. |
+| **Layer 3** | Conv2D | 64 bộ lọc, kích thước kernel 3x3, hàm kích hoạt `relu` |
+| **Layer 4** | MaxPooling2D | Kích thước pool 2x2, giảm chiều xuống còn `(30, 30, 64)` |
+| **Layer 5** | Conv2D |128 bộ lọc, kích thước kernel 3x3, hàm kích hoạt `relu`. |
+| **Layer 6** | MaxPooling2D | Kích thước pool 2x2 giảm chiều xuống còn `(14, 14, 128)`. |
+| **Layer 7** | Flatten | Phẳng hóa ma trận đặc trưng thành vector 1 chiều có kích thước 14x14x128 = 25088 phần tử. |
 | **Layer 8** | Dense | Tầng kết nối đầy đủ (Fully Connected) gồm 128 nơ-ron, hàm kích hoạt `relu` |
 | **Layer 9** | Dropout |Tỷ lệ ẩn `0.5` giúp chống học vẹt (overfitting). |
 | **Layer 10** | Dense (Output) |3 nơ-ron đại diện cho 3 lớp phế liệu, hàm kích hoạt `softmax` để tính phân phối xác suất đầu ra. |
